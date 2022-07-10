@@ -1,0 +1,108 @@
+#
+# Michael Nolan
+# 7 July 2022
+# Numbers Guessing Game
+#
+
+import random
+
+
+def start():
+    print("Welcome to Number's by Michael Nolan.")
+    print("The point of the game is to guess the random number the computer has generated.")
+    print("You will choose your level of difficulty and will have a corresponding amount of guesses.")
+    print("Good Luck. The person with fewer guesses wins.")
+
+
+def get_difficulty():
+    while True:
+
+        try:
+            level = int(input("1 - Beginner, 2 - Intermediate, 3 - Hard: "))
+            if level == 1:
+                return 1
+            elif level == 2:
+                return 2
+            elif level == 3:
+                return 3
+            else:
+                print("Entry not supported, please select from choice given.")
+        except:
+            print("Entry not supported, please select from choice given.")
+
+
+def game():
+    guesses = 0
+    level = get_difficulty()
+    rand = random.randint(1, 101)
+    minimum = 1
+    maximum = 100
+
+    if level == 1:
+        minimum = 1
+        maximum = 100
+        rand = random.randint(minimum, maximum)
+        print("Beginner Mode Selected: You will have 10 guesses to guess the random number.")
+        print("The random number will be between 1 and 100.")
+        print("")
+    elif level == 2:
+        maximum = 1000
+        rand = random.randint(minimum, maximum)
+        print("Intermediate Mode Selected: You will have 10 guesses to guess the random number.")
+        print("The random number will be between 1 and 1000.")
+        print("")
+    elif level == 3:
+        maximum = 10000
+        rand = random.randint(minimum, maximum)
+        print(f"Hard Mode Selec{(str(rand))[0]}ted: You will have 10 guesses to gue{(str(rand)[1])}ss the random number.")
+        print(f"The random numb{(str(rand)[2])}er will be betwe{(str(rand)[-1])}en 1 and 10000.")
+        print("")
+
+
+    while guesses != 10:
+        guess = input("Your Guess: ")
+        try:
+            guess = int(guess)
+        except:
+            print("Entry not supported, please enter a number in the correct range.")
+            continue
+
+        if guess < minimum:
+            print("Guess out of range.")
+            continue
+        elif guess > maximum:
+            print("Guess out of range.")
+            continue
+        elif guess < rand:
+            print("Higher")
+            guesses += 1
+        elif guess > rand:
+            print("Lower")
+            guesses += 1
+        elif guess == rand:
+            print("Correct!")
+            guesses += 1
+            print(f"You got it in {guesses} guesses.")
+            return
+
+    if guesses == 10:
+        print(f"You ran out of guesses, the correct answer was {rand}. Better luck next time.")
+
+
+def main():
+    start()
+    game()
+
+    while True:
+        answer = input("Play again? (y/n): ").lower()
+        if answer == 'y':
+            game()
+        elif answer == 'n':
+            print('Goodbye!')
+            quit()
+        else:
+            print("Unsupported entry.")
+            continue
+
+
+main()
